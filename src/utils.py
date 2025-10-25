@@ -7,8 +7,6 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 
-from tests.conftest import user_settings
-
 load_dotenv()
 
 logger = logging.getLogger(__name__)
@@ -16,10 +14,13 @@ root_dir_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 log_file_path = os.path.join(str(root_dir_path), "logs", "utils.log")
 user_settings_file_path = os.path.join(str(root_dir_path), "utils.log")
 file_handler = logging.FileHandler(str(log_file_path), "w", encoding="UTF-8")
-file_formatter = logging.Formatter('%(asctime)s | %(filename)s:%(lineno)d – %(levelname)s | %(funcName)s: %(message)s')
+file_formatter = logging.Formatter("%(asctime)s | %(filename)s:%(lineno)d – %(levelname)s | %(funcName)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 logger.setLevel(logging.DEBUG)
+
+operations_file_path = os.path.join(str(root_dir_path), "data", "operations.xlsx")
+user_settings_file_path = os.path.join(str(root_dir_path), "user_settings.json")
 
 
 def greeting() -> str:
@@ -40,7 +41,7 @@ def greeting() -> str:
     return greeting_message
 
 
-def reader_excel(path: str = "../data/operations.xlsx") -> pd.DataFrame:
+def reader_excel(path: str = str(operations_file_path)) -> pd.DataFrame:
     """Принимает путь к Excel-файлу и возвращает данные в DataFrame"""
 
     data = pd.DataFrame()
@@ -52,6 +53,7 @@ def reader_excel(path: str = "../data/operations.xlsx") -> pd.DataFrame:
         logger.error(f"Ошибка: {error}. Дальше передана пустая база данных.")
     finally:
         return data
+
 
 def current_month_operations(operations: pd.DataFrame, final_datetime: str) -> pd.DataFrame:
     """Принимает данные операций и возвращает только те,
@@ -133,7 +135,7 @@ def top_5_operations(operations: pd.DataFrame) -> list[dict]:
         return top_5_operations_list
 
 
-def get_user_settings(user_settings: str, file_path: str = "../user_settings") -> list[str]:
+def get_user_settings(user_settings: str, file_path: str = str(user_settings_file_path)) -> list[str]:
     """Дает доступ к данным файла 'user_settings.json"""
 
     chosen_user_settings = []
@@ -143,9 +145,9 @@ def get_user_settings(user_settings: str, file_path: str = "../user_settings") -
             logger.info("Файл с данными пользователя успешно открыт.")
             try:
                 chosen_user_settings = list(user_currencies_stocks[user_settings])
-                logger.info(f"Данные пользователя \'{user_settings}\' успешно извлечены из файла.")
+                logger.info(f"Данные пользователя '{user_settings}' успешно извлечены из файла.")
             except KeyError as error:
-                logger.error(f"Ошибка: {error}. По данным пользователя \'{user_settings}\' передан пустой список.")
+                logger.error(f"Ошибка: {error}. По данным пользователя '{user_settings}' передан пустой список.")
     except FileNotFoundError as error:
         logger.error(f"Ошибка: {error}. По данным пользователя '{user_settings}' передан пустой список.")
     finally:

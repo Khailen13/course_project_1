@@ -1,21 +1,13 @@
+import datetime
+from unittest.mock import Mock, mock_open, patch
+
 import pandas as pd
-
-pd.options.mode.copy_on_write = True
-
-from src.utils import (
-    cards_info,
-    currency_rates,
-    current_month_operations,
-    get_user_settings,
-    greeting,
-    reader_excel,
-    stock_prices,
-    top_5_operations,
-)
-from unittest.mock import patch, mock_open, Mock
 import pytest
 
-import datetime
+from src.utils import (cards_info, currency_rates, current_month_operations, get_user_settings, greeting, reader_excel,
+                       stock_prices, top_5_operations)
+
+pd.options.mode.copy_on_write = True
 
 
 @pytest.mark.parametrize(
@@ -44,14 +36,14 @@ def test_reader_excel():
 def test_reader_excel_file_not_found_error():
     """Проверка при отсутствии файла"""
 
-    assert reader_excel("non-existent_file").empty == True
+    assert reader_excel("non-existent_file").empty
 
 
 def test_current_month_incorrect_date(operations):
     """Проверка при неправильном формате входящих даты и времени"""
 
     final_datetime = "01.12.2021 13:15:00"
-    assert current_month_operations(operations, final_datetime).empty == True
+    assert current_month_operations(operations, final_datetime).empty
 
 
 def test_current_month_key_error(operations):
@@ -59,7 +51,7 @@ def test_current_month_key_error(operations):
 
     final_datetime = "2021-12-01 13:15:00"
     df_without_the_required_key = operations.rename(columns={"Дата операции": "Ошибочный ключ"})
-    assert current_month_operations(df_without_the_required_key, final_datetime).empty == True
+    assert current_month_operations(df_without_the_required_key, final_datetime).empty
 
 
 def test_current_month_success(operations):
@@ -110,7 +102,7 @@ def test_top_5_operations_until_2021_12_02(operations, top_5_operations_until_20
     assert top_5_operations(considered_operations) == top_5_operations_until_2021_12_02
 
 
-def test_top_5_operations_until_2021_12_02(operations):
+def test_top_5_operations_until_2021_12_01(operations):
     """Проверка при пустой базе"""
 
     final_datetime = "2021-12-01 00:00:00"

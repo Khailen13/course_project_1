@@ -1,6 +1,5 @@
-import pytest
 import pandas as pd
-import json
+import pytest
 
 
 @pytest.fixture
@@ -151,7 +150,7 @@ def some_currency_rates() -> str:
     currency_rates = {
         "Date": "2025-10-25T11:30:00+03:00",
         "PreviousDate": "2025-10-24T11:30:00+03:00",
-        "PreviousURL": "\/\/www.cbr-xml-daily.ru\/archive\/2025\/10\/24\/daily_json.js",
+        "PreviousURL": "daily_json.js",
         "Timestamp": "2025-10-24T20:00:00+03:00",
         "Valute": {
             "USD": {
@@ -183,19 +182,19 @@ def stock() -> dict:
     """Информация по некоторым акциям"""
 
     stock = {
-            "Global Quote": {
-                "01. symbol": "AAPL",
-                "02. open": "259.9400",
-                "03. high": "260.6200",
-                "04. low": "258.0101",
-                "05. price": "259.5800",
-                "06. volume": "32754941",
-                "07. latest trading day": "2025-10-23",
-                "08. previous close": "258.4500",
-                "09. change": "1.1300",
-                "10. change percent": "0.4372%",
-            }
+        "Global Quote": {
+            "01. symbol": "AAPL",
+            "02. open": "259.9400",
+            "03. high": "260.6200",
+            "04. low": "258.0101",
+            "05. price": "259.5800",
+            "06. volume": "32754941",
+            "07. latest trading day": "2025-10-23",
+            "08. previous close": "258.4500",
+            "09. change": "1.1300",
+            "10. change percent": "0.4372%",
         }
+    }
     return stock
 
 
