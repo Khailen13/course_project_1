@@ -7,7 +7,6 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 root_dir_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 log_file_path = os.path.join(str(root_dir_path), "logs", "services.log")
-user_settings_file_path = os.path.join(str(root_dir_path), "utils.log")
 file_handler = logging.FileHandler(str(log_file_path), "w", encoding="UTF-8")
 file_formatter = logging.Formatter("%(asctime)s | %(filename)s:%(lineno)d – %(levelname)s | %(funcName)s: %(message)s")
 file_handler.setFormatter(file_formatter)
@@ -50,10 +49,11 @@ def cashback_info(operations: pd.DataFrame) -> dict:
         return category_cashback_info
 
 
-def main(data: pd.DataFrame, year: int, month: int) -> str:
+def main(data: list[dict], year: int, month: int) -> str:
     """Выдает информацию по кэшбэку для указанного месяца года в виде json-строки"""
 
-    filtered_operations = operations_filtered_by_month_and_year(data, year=year, month=month)
+    data_df = pd.DataFrame.from_dict(data)
+    filtered_operations = operations_filtered_by_month_and_year(data_df, year=year, month=month)
     category_cashback_info = cashback_info(filtered_operations)
     category_cashback_info_json = json.dumps(category_cashback_info, indent=4, ensure_ascii=False)
     return category_cashback_info_json

@@ -25,7 +25,7 @@ user_settings_file_path = os.path.join(str(root_dir_path), "user_settings.json")
 
 def greeting() -> str:
     """Приветствие в формате «Доброе утро» / «Добрый день» / «Добрый вечер» / «Доброй ночи»
-    в зависимости от текущего времени."""
+    в зависимости от текущего времени суток."""
 
     current_hour = datetime.datetime.now().hour
     greeting_messages = ["Доброй ночи", "Доброе утро", "Добрый день", "Добрый вечер"]
@@ -136,7 +136,7 @@ def top_5_operations(operations: pd.DataFrame) -> list[dict]:
 
 
 def get_user_settings(user_settings: str, file_path: str = str(user_settings_file_path)) -> list[str]:
-    """Дает доступ к данным файла 'user_settings.json"""
+    """Извлекает запрашиваемые данные из файла 'user_settings.json'"""
 
     chosen_user_settings = []
     try:
