@@ -1,15 +1,7 @@
 import json
 
-from src.utils import (
-    cards_info,
-    currency_rates,
-    current_month_operations,
-    get_user_settings,
-    greeting,
-    reader_excel,
-    stock_prices,
-    top_5_operations,
-)
+from src.utils import (cards_info, currency_rates, current_month_operations, get_user_settings, greeting, reader_excel,
+                       stock_prices, top_5_operations)
 
 
 def main(final_datetime: str) -> str:
