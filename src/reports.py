@@ -16,7 +16,7 @@ logger.addHandler(file_handler)
 logger.setLevel(logging.DEBUG)
 
 
-def decorator_with_args(file_name: str):
+def decorator_file_saver(file_name: str):
     def my_decorator(func):
         def wrapper(*args, **kwargs):
             file_path = os.path.join(str(root_dir_path), "data", file_name)
@@ -28,7 +28,6 @@ def decorator_with_args(file_name: str):
     return my_decorator
 
 
-@decorator_with_args("spending_by_category.xlsx")
 def spending_by_category(transactions: pd.DataFrame, category: str, date: Optional[str] = None) -> pd.DataFrame:
     """Функция возвращает траты по заданной категории за последние три месяца (от переданной даты)
     Формат входной даты '%d.%m.%Y %H:%M:%S'"""
